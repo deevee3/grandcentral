@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 export const store = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 store.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { train: number | { id: number } } | [train: number | { id: n
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 store.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ store.post = (args: { train: number | { id: number } } | [train: number | { id: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 const storeForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ const storeForm = (args: { train: number | { id: number } } | [train: number | {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 storeForm.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -81,7 +81,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 export const update = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -96,7 +96,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 update.url = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -126,7 +126,7 @@ update.url = (args: { train: number | { id: number }, milestone: number | { id: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 update.put = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -136,7 +136,7 @@ update.put = (args: { train: number | { id: number }, milestone: number | { id: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 const updateForm = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -151,7 +151,7 @@ const updateForm = (args: { train: number | { id: number }, milestone: number | 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 updateForm.put = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -6,16 +6,22 @@ import { dashboard } from '@/routes';
 import centralTower from '@/routes/central-tower';
 import stationMaster from '@/routes/station-master';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import {
+    Activity,
     AlertTriangle,
     ArrowRight,
+    Bot,
     Calendar,
     CheckCircle2,
     Circle,
     Clock,
     ListTodo,
+    Loader2,
+    Radio,
+    RefreshCw,
 } from 'lucide-react';
+import { useState } from 'react';
 
 interface Task {
     id: number;
@@ -31,6 +37,8 @@ interface GlobalTask {
     status: 'pending' | 'in_progress' | 'completed';
     priority: 'low' | 'medium' | 'high';
     assigned_crew: string | null;
+    mc_task_id?: number | null;
+    bot_dispatch_status?: string | null;
     train_id: number;
     train_name: string;
     train_status: 'on_time' | 'delayed' | 'in_yard';
@@ -42,6 +50,7 @@ interface Milestone {
     title: string;
     due_date: string | null;
     status: 'pending' | 'completed' | 'missed';
+    mc_milestone_id?: number | null;
 }
 
 interface Train {
@@ -49,6 +58,8 @@ interface Train {
     name: string;
     path: string;
     status: 'on_time' | 'delayed' | 'in_yard';
+    mc_project_id?: number | null;
+    mc_project_title?: string | null;
     milestones: Milestone[];
     tasks: Task[];
 }
@@ -61,10 +72,48 @@ interface TaskStats {
     high_priority: number;
 }
 
+interface McStatus {
+    url: string;
+    worker_reachable: boolean;
+    authenticated: boolean;
+    mode: 'live' | 'local_mirror' | 'disconnected';
+    project_count: number;
+    linked_trains_count: number;
+}
+
+interface McActivityItem {
+    id: number;
+    action: string;
+    entityType: string;
+    entityId: string;
+    detail: string;
+    createdAt: string;
+}
+
+interface BotCrewMember {
+    id: string;
+    name: string;
+    role: string;
+    status: 'online' | 'standby' | 'offline';
+    capabilities: string[];
+}
+
+interface BotStatus {
+    hq_url: string;
+    hq_configured: boolean;
+    openclaw_gateway_url: string;
+    openclaw_online: boolean;
+    lmstudio_configured: boolean;
+    roster: BotCrewMember[];
+}
+
 interface Props {
     trains: Train[];
     allTasks: GlobalTask[];
     taskStats: TaskStats;
+    mcStatus?: McStatus;
+    mcActivity?: McActivityItem[];
+    botStatus?: BotStatus;
 }
 
 function priorityIcon(priority: 'low' | 'medium' | 'high') {
@@ -103,7 +152,17 @@ function trainStatusBadgeClasses(status: Train['status']): string {
     );
 }
 
-export default function CentralTower({ trains, allTasks, taskStats }: Props) {
+export default function CentralTower({
+    trains,
+    allTasks,
+    taskStats,
+    mcStatus,
+    mcActivity = [],
+    botStatus,
+}: Props) {
+    const [isSyncingMc, setIsSyncingMc] = useState(false);
+    const [isSendingHeartbeat, setIsSendingHeartbeat] = useState(false);
+
     const breadcrumbs: BreadcrumbItem[] = [
         {
             title: 'Dashboard',
@@ -119,6 +178,30 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
     const activeTrains = trains.filter((t) => t.status === 'on_time').length;
     const delayedTrains = trains.filter((t) => t.status === 'delayed').length;
 
+    const handleSyncAllMc = () => {
+        setIsSyncingMc(true);
+        router.post(
+            '/central-tower/sync-mc',
+            {},
+            {
+                preserveScroll: true,
+                onFinish: () => setIsSyncingMc(false),
+            },
+        );
+    };
+
+    const handleSendHeartbeat = () => {
+        setIsSendingHeartbeat(true);
+        router.post(
+            '/central-tower/bot-heartbeat',
+            {},
+            {
+                preserveScroll: true,
+                onFinish: () => setIsSendingHeartbeat(false),
+            },
+        );
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Central Tower" />
@@ -131,57 +214,70 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
                             Central Tower
                         </h1>
                         <p className="mt-1 text-sm text-muted-foreground">
-                            Fleet-wide milestone timetables and global task
-                            manifest across all tracks.
+                            Fleet-wide milestone timetables, Mission Control HQ
+                            bridge, and Bot HQ crew telemetry.
                         </p>
                     </div>
 
-                    <dl className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-border">
-                        <div className="sm:px-5 first:sm:pl-0">
-                            <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-                                Traffic
-                            </dt>
-                            <dd className="mt-0.5 font-mono text-xl font-bold text-foreground tabular-nums">
-                                {activeTrains} / {totalTrains}
-                            </dd>
-                        </div>
-                        <div className="sm:px-5">
-                            <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-                                Delays
-                            </dt>
-                            <dd
-                                className={`mt-0.5 font-mono text-xl font-bold tabular-nums ${
-                                    delayedTrains > 0
-                                        ? 'text-amber-800 dark:text-amber-300'
-                                        : 'text-emerald-800 dark:text-emerald-300'
-                                }`}
-                            >
-                                {delayedTrains}
-                            </dd>
-                        </div>
-                        <div className="sm:px-5">
-                            <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-                                Manifest
-                            </dt>
-                            <dd className="mt-0.5 font-mono text-xl font-bold text-foreground tabular-nums">
-                                {taskStats.total}
-                            </dd>
-                        </div>
-                        <div className="sm:pl-5">
-                            <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-                                Urgent
-                            </dt>
-                            <dd
-                                className={`mt-0.5 font-mono text-xl font-bold tabular-nums ${
-                                    taskStats.high_priority > 0
-                                        ? 'text-destructive'
-                                        : 'text-foreground'
-                                }`}
-                            >
-                                {taskStats.high_priority}
-                            </dd>
-                        </div>
-                    </dl>
+                    <div className="flex flex-wrap items-center gap-4">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleSyncAllMc}
+                            disabled={isSyncingMc}
+                            className="gap-2"
+                        >
+                            {isSyncingMc ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            ) : (
+                                <RefreshCw className="h-3.5 w-3.5 text-primary" />
+                            )}
+                            Sync Mission Control
+                        </Button>
+
+                        <dl className="grid grid-cols-2 gap-6 sm:grid-cols-4 sm:gap-0 sm:divide-x sm:divide-border">
+                            <div className="sm:px-4 first:sm:pl-0">
+                                <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
+                                    Traffic
+                                </dt>
+                                <dd className="mt-0.5 font-mono text-xl font-bold text-foreground tabular-nums">
+                                    {activeTrains} / {totalTrains}
+                                </dd>
+                            </div>
+                            <div className="sm:px-4">
+                                <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
+                                    Delays
+                                </dt>
+                                <dd
+                                    className={`mt-0.5 font-mono text-xl font-bold tabular-nums ${
+                                        delayedTrains > 0
+                                            ? 'text-amber-800 dark:text-amber-300'
+                                            : 'text-emerald-800 dark:text-emerald-300'
+                                    }`}
+                                >
+                                    {delayedTrains}
+                                </dd>
+                            </div>
+                            <div className="sm:px-4">
+                                <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
+                                    Manifest
+                                </dt>
+                                <dd className="mt-0.5 font-mono text-xl font-bold text-foreground tabular-nums">
+                                    {taskStats.total}
+                                </dd>
+                            </div>
+                            <div className="sm:pl-4">
+                                <dt className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
+                                    MC Linked
+                                </dt>
+                                <dd className="mt-0.5 font-mono text-xl font-bold text-primary tabular-nums">
+                                    {mcStatus?.linked_trains_count ??
+                                        trains.filter((t) => t.mc_project_id)
+                                            .length}
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
                 </div>
 
                 <Tabs defaultValue="schedule" className="w-full">
@@ -193,6 +289,10 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
                         <TabsTrigger value="manifest" className="gap-2">
                             <ListTodo className="h-4 w-4" />
                             Global Manifest
+                        </TabsTrigger>
+                        <TabsTrigger value="mission-control" className="gap-2">
+                            <Bot className="h-4 w-4" />
+                            Mission Control & Bots
                         </TabsTrigger>
                     </TabsList>
 
@@ -206,14 +306,28 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
                                         className="flex flex-col transition-colors hover:bg-muted/30 md:flex-row"
                                     >
                                         {/* Train Info Column */}
-                                        <div className="md: flex shrink-0 flex-col justify-between border-b border-border p-5 md:w-64 md:border-r md:border-b-0">
+                                        <div className="flex shrink-0 flex-col justify-between border-b border-border p-5 md:w-64 md:border-r md:border-b-0">
                                             <div>
-                                                <h2
-                                                    className="truncate font-serif text-lg font-bold text-foreground"
-                                                    title={train.name}
-                                                >
-                                                    {train.name}
-                                                </h2>
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <h2
+                                                        className="truncate font-serif text-lg font-bold text-foreground"
+                                                        title={train.name}
+                                                    >
+                                                        {train.name}
+                                                    </h2>
+                                                    {train.mc_project_id && (
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="shrink-0 border-primary/35 bg-primary/10 font-mono text-xs text-primary"
+                                                            title={`Mission Control: ${train.mc_project_title}`}
+                                                        >
+                                                            MC #
+                                                            {
+                                                                train.mc_project_id
+                                                            }
+                                                        </Badge>
+                                                    )}
+                                                </div>
                                                 <div className="mt-1 truncate font-mono text-xs text-muted-foreground">
                                                     {train.path}
                                                 </div>
@@ -383,7 +497,7 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
                                     <div className="col-span-1">Pri</div>
                                     <div className="col-span-4">Task</div>
                                     <div className="col-span-3">Project</div>
-                                    <div className="col-span-2">Crew</div>
+                                    <div className="col-span-2">Crew / Bot</div>
                                     <div className="col-span-2">Status</div>
                                 </div>
                                 <ul className="divide-y divide-border">
@@ -407,11 +521,21 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
                                                     )}
                                                 </div>
                                                 <div className="col-span-4">
-                                                    <div
-                                                        className="truncate text-sm font-medium text-foreground"
-                                                        title={task.title}
-                                                    >
-                                                        {task.title}
+                                                    <div className="flex items-center gap-2">
+                                                        <span
+                                                            className="truncate text-sm font-medium text-foreground"
+                                                            title={task.title}
+                                                        >
+                                                            {task.title}
+                                                        </span>
+                                                        {task.mc_task_id && (
+                                                            <span className="shrink-0 font-mono text-xs text-primary">
+                                                                MC #
+                                                                {
+                                                                    task.mc_task_id
+                                                                }
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     {task.description && (
                                                         <div className="mt-0.5 truncate text-xs text-muted-foreground">
@@ -431,7 +555,7 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
                                                         {task.train_name}
                                                     </Link>
                                                 </div>
-                                                <div className="col-span-2 text-sm text-muted-foreground">
+                                                <div className="col-span-2 font-mono text-xs text-muted-foreground">
                                                     {task.assigned_crew || '—'}
                                                 </div>
                                                 <div className="col-span-2 flex items-center gap-2">
@@ -447,6 +571,154 @@ export default function CentralTower({ trains, allTasks, taskStats }: Props) {
                                         ))
                                     )}
                                 </ul>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* Mission Control & Bot Fleet Tab */}
+                    <TabsContent value="mission-control">
+                        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                            {/* Bot Fleet Roster */}
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between border-b border-border pb-2">
+                                    <h2 className="flex items-center gap-2 font-serif text-xl font-bold text-foreground">
+                                        <Bot className="h-5 w-5 text-primary" />
+                                        Bot HQ & OpenClaw Crew
+                                    </h2>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={handleSendHeartbeat}
+                                        disabled={isSendingHeartbeat}
+                                        className="gap-1.5 font-mono text-xs"
+                                    >
+                                        {isSendingHeartbeat ? (
+                                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                        ) : (
+                                            <Radio className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
+                                        )}
+                                        Ping Bot HQ
+                                    </Button>
+                                </div>
+
+                                <div className="overflow-hidden rounded-lg border border-border bg-card shadow-xs">
+                                    <div className="border-b border-border bg-muted/40 px-4 py-3 text-xs text-muted-foreground">
+                                        Connected to{' '}
+                                        <span className="font-mono font-semibold text-foreground">
+                                            {botStatus?.hq_url ||
+                                                'https://bots.dvaughnhouse.com'}
+                                        </span>{' '}
+                                        & OpenClaw Gateway (
+                                        <span className="font-mono text-foreground">
+                                            {botStatus?.openclaw_online
+                                                ? 'LIVE'
+                                                : 'STANDBY'}
+                                        </span>
+                                        )
+                                    </div>
+                                    <ul className="divide-y divide-border">
+                                        {(botStatus?.roster || []).map(
+                                            (bot) => (
+                                                <li
+                                                    key={bot.id}
+                                                    className="flex items-start justify-between gap-4 p-4"
+                                                >
+                                                    <div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="font-serif text-base font-bold text-foreground">
+                                                                {bot.name}
+                                                            </span>
+                                                            <span className="font-mono text-xs text-muted-foreground">
+                                                                ({bot.id})
+                                                            </span>
+                                                        </div>
+                                                        <p className="mt-0.5 text-xs text-muted-foreground">
+                                                            {bot.role}
+                                                        </p>
+                                                        <div className="mt-2 flex flex-wrap gap-1.5">
+                                                            {bot.capabilities.map(
+                                                                (cap) => (
+                                                                    <span
+                                                                        key={
+                                                                            cap
+                                                                        }
+                                                                        className="rounded bg-secondary px-2 py-0.5 font-mono text-xs text-secondary-foreground"
+                                                                    >
+                                                                        {cap}
+                                                                    </span>
+                                                                ),
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <Badge
+                                                        variant="outline"
+                                                        className={
+                                                            bot.status ===
+                                                            'online'
+                                                                ? 'border-emerald-600/30 bg-emerald-500/10 font-mono text-xs text-emerald-800 uppercase dark:border-emerald-400/30 dark:bg-emerald-500/15 dark:text-emerald-300'
+                                                                : 'font-mono text-xs uppercase'
+                                                        }
+                                                    >
+                                                        {bot.status}
+                                                    </Badge>
+                                                </li>
+                                            ),
+                                        )}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {/* Mission Control Activity Ledger */}
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between border-b border-border pb-2">
+                                    <h2 className="flex items-center gap-2 font-serif text-xl font-bold text-foreground">
+                                        <Activity className="h-5 w-5 text-primary" />
+                                        Mission Control Activity Feed
+                                    </h2>
+                                    <Badge
+                                        variant="outline"
+                                        className="font-mono text-xs uppercase"
+                                    >
+                                        {mcStatus?.mode === 'live'
+                                            ? 'Live D1 Sync'
+                                            : 'Local Mirror'}
+                                    </Badge>
+                                </div>
+
+                                <div className="overflow-hidden rounded-lg border border-border bg-card shadow-xs">
+                                    {mcActivity.length === 0 ? (
+                                        <div className="p-8 text-center text-sm text-muted-foreground">
+                                            No Mission Control activity recorded
+                                            yet.
+                                        </div>
+                                    ) : (
+                                        <ul className="divide-y divide-border">
+                                            {mcActivity.map((item) => (
+                                                <li
+                                                    key={item.id}
+                                                    className="px-4 py-3"
+                                                >
+                                                    <div className="flex items-center justify-between gap-2">
+                                                        <span className="font-mono text-xs font-semibold tracking-wider text-primary uppercase">
+                                                            {item.entityType} •{' '}
+                                                            {item.action}
+                                                        </span>
+                                                        <span className="font-mono text-xs text-muted-foreground tabular-nums">
+                                                            {item.createdAt
+                                                                ? new Date(
+                                                                      item.createdAt,
+                                                                  ).toLocaleDateString()
+                                                                : ''}
+                                                        </span>
+                                                    </div>
+                                                    <div className="mt-1 text-sm text-foreground">
+                                                        {item.detail}
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </TabsContent>

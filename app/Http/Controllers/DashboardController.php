@@ -22,6 +22,8 @@ class DashboardController extends Controller
                 'statusLabel' => $train->getStatusLabel(),
                 'platform' => $train->platform,
                 'lastDeparture' => $train->last_departure?->toIso8601String(),
+                'mcProjectId' => $train->mc_project_id,
+                'mcProjectTitle' => $train->mc_project_title,
                 'aboardUrl' => route('trains.aboard', $train, false),
                 'stationMasterUrl' => route('station-master.show', $train, false),
             ]);

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:17
+* @see app/Http/Controllers/StationMasterController.php:18
 * @route '/station-master/{train}'
 */
 export const show = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:17
+* @see app/Http/Controllers/StationMasterController.php:18
 * @route '/station-master/{train}'
 */
 show.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ show.url = (args: { train: number | { id: number } } | [train: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:17
+* @see app/Http/Controllers/StationMasterController.php:18
 * @route '/station-master/{train}'
 */
 show.get = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ show.get = (args: { train: number | { id: number } } | [train: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:17
+* @see app/Http/Controllers/StationMasterController.php:18
 * @route '/station-master/{train}'
 */
 show.head = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ show.head = (args: { train: number | { id: number } } | [train: number | { id: n
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:17
+* @see app/Http/Controllers/StationMasterController.php:18
 * @route '/station-master/{train}'
 */
 const showForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const showForm = (args: { train: number | { id: number } } | [train: number | { 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:17
+* @see app/Http/Controllers/StationMasterController.php:18
 * @route '/station-master/{train}'
 */
 showForm.get = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ showForm.get = (args: { train: number | { id: number } } | [train: number | { id
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:17
+* @see app/Http/Controllers/StationMasterController.php:18
 * @route '/station-master/{train}'
 */
 showForm.head = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -106,7 +106,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTrain
-* @see app/Http/Controllers/StationMasterController.php:34
+* @see app/Http/Controllers/StationMasterController.php:56
 * @route '/station-master/{train}'
 */
 export const updateTrain = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -121,7 +121,7 @@ updateTrain.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTrain
-* @see app/Http/Controllers/StationMasterController.php:34
+* @see app/Http/Controllers/StationMasterController.php:56
 * @route '/station-master/{train}'
 */
 updateTrain.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -154,7 +154,7 @@ updateTrain.url = (args: { train: number | { id: number } } | [train: number | {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTrain
-* @see app/Http/Controllers/StationMasterController.php:34
+* @see app/Http/Controllers/StationMasterController.php:56
 * @route '/station-master/{train}'
 */
 updateTrain.put = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -164,7 +164,7 @@ updateTrain.put = (args: { train: number | { id: number } } | [train: number | {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTrain
-* @see app/Http/Controllers/StationMasterController.php:34
+* @see app/Http/Controllers/StationMasterController.php:56
 * @route '/station-master/{train}'
 */
 const updateTrainForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -179,7 +179,7 @@ const updateTrainForm = (args: { train: number | { id: number } } | [train: numb
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTrain
-* @see app/Http/Controllers/StationMasterController.php:34
+* @see app/Http/Controllers/StationMasterController.php:56
 * @route '/station-master/{train}'
 */
 updateTrainForm.put = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -195,8 +195,88 @@ updateTrainForm.put = (args: { train: number | { id: number } } | [train: number
 updateTrain.form = updateTrainForm
 
 /**
+* @see \App\Http\Controllers\StationMasterController::syncMissionControl
+* @see app/Http/Controllers/StationMasterController.php:67
+* @route '/station-master/{train}/sync-mc'
+*/
+export const syncMissionControl = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: syncMissionControl.url(args, options),
+    method: 'post',
+})
+
+syncMissionControl.definition = {
+    methods: ["post"],
+    url: '/station-master/{train}/sync-mc',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\StationMasterController::syncMissionControl
+* @see app/Http/Controllers/StationMasterController.php:67
+* @route '/station-master/{train}/sync-mc'
+*/
+syncMissionControl.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { train: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { train: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            train: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        train: typeof args.train === 'object'
+        ? args.train.id
+        : args.train,
+    }
+
+    return syncMissionControl.definition.url
+            .replace('{train}', parsedArgs.train.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\StationMasterController::syncMissionControl
+* @see app/Http/Controllers/StationMasterController.php:67
+* @route '/station-master/{train}/sync-mc'
+*/
+syncMissionControl.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: syncMissionControl.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\StationMasterController::syncMissionControl
+* @see app/Http/Controllers/StationMasterController.php:67
+* @route '/station-master/{train}/sync-mc'
+*/
+const syncMissionControlForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: syncMissionControl.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\StationMasterController::syncMissionControl
+* @see app/Http/Controllers/StationMasterController.php:67
+* @route '/station-master/{train}/sync-mc'
+*/
+syncMissionControlForm.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: syncMissionControl.url(args, options),
+    method: 'post',
+})
+
+syncMissionControl.form = syncMissionControlForm
+
+/**
 * @see \App\Http\Controllers\StationMasterController::storeMilestone
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 export const storeMilestone = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -211,7 +291,7 @@ storeMilestone.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeMilestone
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 storeMilestone.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -244,7 +324,7 @@ storeMilestone.url = (args: { train: number | { id: number } } | [train: number 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeMilestone
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 storeMilestone.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -254,7 +334,7 @@ storeMilestone.post = (args: { train: number | { id: number } } | [train: number
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeMilestone
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 const storeMilestoneForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -264,7 +344,7 @@ const storeMilestoneForm = (args: { train: number | { id: number } } | [train: n
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeMilestone
-* @see app/Http/Controllers/StationMasterController.php:218
+* @see app/Http/Controllers/StationMasterController.php:286
 * @route '/station-master/{train}/milestones'
 */
 storeMilestoneForm.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -276,7 +356,7 @@ storeMilestone.form = storeMilestoneForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMilestone
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 export const updateMilestone = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -291,7 +371,7 @@ updateMilestone.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMilestone
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 updateMilestone.url = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -321,7 +401,7 @@ updateMilestone.url = (args: { train: number | { id: number }, milestone: number
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMilestone
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 updateMilestone.put = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -331,7 +411,7 @@ updateMilestone.put = (args: { train: number | { id: number }, milestone: number
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMilestone
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 const updateMilestoneForm = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -346,7 +426,7 @@ const updateMilestoneForm = (args: { train: number | { id: number }, milestone: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMilestone
-* @see app/Http/Controllers/StationMasterController.php:236
+* @see app/Http/Controllers/StationMasterController.php:306
 * @route '/station-master/{train}/milestones/{milestone}'
 */
 updateMilestoneForm.put = (args: { train: number | { id: number }, milestone: number | { id: number } } | [train: number | { id: number }, milestone: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -363,7 +443,7 @@ updateMilestone.form = updateMilestoneForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeTask
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 export const storeTask = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -378,7 +458,7 @@ storeTask.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeTask
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 storeTask.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -411,7 +491,7 @@ storeTask.url = (args: { train: number | { id: number } } | [train: number | { i
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeTask
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 storeTask.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -421,7 +501,7 @@ storeTask.post = (args: { train: number | { id: number } } | [train: number | { 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeTask
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 const storeTaskForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -431,7 +511,7 @@ const storeTaskForm = (args: { train: number | { id: number } } | [train: number
 
 /**
 * @see \App\Http\Controllers\StationMasterController::storeTask
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 storeTaskForm.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -443,7 +523,7 @@ storeTask.form = storeTaskForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTask
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 export const updateTask = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -458,7 +538,7 @@ updateTask.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTask
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 updateTask.url = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -488,7 +568,7 @@ updateTask.url = (args: { train: number | { id: number }, task: number | { id: n
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTask
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 updateTask.put = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -498,7 +578,7 @@ updateTask.put = (args: { train: number | { id: number }, task: number | { id: n
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTask
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 const updateTaskForm = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -513,7 +593,7 @@ const updateTaskForm = (args: { train: number | { id: number }, task: number | {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateTask
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 updateTaskForm.put = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -529,8 +609,85 @@ updateTaskForm.put = (args: { train: number | { id: number }, task: number | { i
 updateTask.form = updateTaskForm
 
 /**
+* @see \App\Http\Controllers\StationMasterController::dispatchTaskBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+export const dispatchTaskBot = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: dispatchTaskBot.url(args, options),
+    method: 'post',
+})
+
+dispatchTaskBot.definition = {
+    methods: ["post"],
+    url: '/station-master/{train}/tasks/{task}/dispatch-bot',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchTaskBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+dispatchTaskBot.url = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            train: args[0],
+            task: args[1],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        train: typeof args.train === 'object'
+        ? args.train.id
+        : args.train,
+        task: typeof args.task === 'object'
+        ? args.task.id
+        : args.task,
+    }
+
+    return dispatchTaskBot.definition.url
+            .replace('{train}', parsedArgs.train.toString())
+            .replace('{task}', parsedArgs.task.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchTaskBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+dispatchTaskBot.post = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: dispatchTaskBot.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchTaskBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+const dispatchTaskBotForm = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: dispatchTaskBot.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchTaskBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+dispatchTaskBotForm.post = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: dispatchTaskBot.url(args, options),
+    method: 'post',
+})
+
+dispatchTaskBot.form = dispatchTaskBotForm
+
+/**
 * @see \App\Http\Controllers\StationMasterController::getMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 export const getMarkdownFile = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -545,7 +702,7 @@ getMarkdownFile.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::getMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 getMarkdownFile.url = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions) => {
@@ -573,7 +730,7 @@ getMarkdownFile.url = (args: { train: number | { id: number }, filename: string 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::getMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 getMarkdownFile.get = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -583,7 +740,7 @@ getMarkdownFile.get = (args: { train: number | { id: number }, filename: string 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::getMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 getMarkdownFile.head = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -593,7 +750,7 @@ getMarkdownFile.head = (args: { train: number | { id: number }, filename: string
 
 /**
 * @see \App\Http\Controllers\StationMasterController::getMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 const getMarkdownFileForm = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -603,7 +760,7 @@ const getMarkdownFileForm = (args: { train: number | { id: number }, filename: s
 
 /**
 * @see \App\Http\Controllers\StationMasterController::getMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 getMarkdownFileForm.get = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -613,7 +770,7 @@ getMarkdownFileForm.get = (args: { train: number | { id: number }, filename: str
 
 /**
 * @see \App\Http\Controllers\StationMasterController::getMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 getMarkdownFileForm.head = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -630,7 +787,7 @@ getMarkdownFile.form = getMarkdownFileForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 export const updateMarkdownFile = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -645,7 +802,7 @@ updateMarkdownFile.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 updateMarkdownFile.url = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions) => {
@@ -673,7 +830,7 @@ updateMarkdownFile.url = (args: { train: number | { id: number }, filename: stri
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 updateMarkdownFile.put = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -683,7 +840,7 @@ updateMarkdownFile.put = (args: { train: number | { id: number }, filename: stri
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 const updateMarkdownFileForm = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -698,7 +855,7 @@ const updateMarkdownFileForm = (args: { train: number | { id: number }, filename
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateMarkdownFile
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 updateMarkdownFileForm.put = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -715,7 +872,7 @@ updateMarkdownFile.form = updateMarkdownFileForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::suggestSchedule
-* @see app/Http/Controllers/StationMasterController.php:79
+* @see app/Http/Controllers/StationMasterController.php:149
 * @route '/station-master/{train}/suggest-schedule'
 */
 export const suggestSchedule = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -730,7 +887,7 @@ suggestSchedule.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::suggestSchedule
-* @see app/Http/Controllers/StationMasterController.php:79
+* @see app/Http/Controllers/StationMasterController.php:149
 * @route '/station-master/{train}/suggest-schedule'
 */
 suggestSchedule.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -763,7 +920,7 @@ suggestSchedule.url = (args: { train: number | { id: number } } | [train: number
 
 /**
 * @see \App\Http\Controllers\StationMasterController::suggestSchedule
-* @see app/Http/Controllers/StationMasterController.php:79
+* @see app/Http/Controllers/StationMasterController.php:149
 * @route '/station-master/{train}/suggest-schedule'
 */
 suggestSchedule.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -773,7 +930,7 @@ suggestSchedule.post = (args: { train: number | { id: number } } | [train: numbe
 
 /**
 * @see \App\Http\Controllers\StationMasterController::suggestSchedule
-* @see app/Http/Controllers/StationMasterController.php:79
+* @see app/Http/Controllers/StationMasterController.php:149
 * @route '/station-master/{train}/suggest-schedule'
 */
 const suggestScheduleForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -783,7 +940,7 @@ const suggestScheduleForm = (args: { train: number | { id: number } } | [train: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::suggestSchedule
-* @see app/Http/Controllers/StationMasterController.php:79
+* @see app/Http/Controllers/StationMasterController.php:149
 * @route '/station-master/{train}/suggest-schedule'
 */
 suggestScheduleForm.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -795,7 +952,7 @@ suggestSchedule.form = suggestScheduleForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::applySchedule
-* @see app/Http/Controllers/StationMasterController.php:110
+* @see app/Http/Controllers/StationMasterController.php:172
 * @route '/station-master/{train}/apply-schedule'
 */
 export const applySchedule = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -810,7 +967,7 @@ applySchedule.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::applySchedule
-* @see app/Http/Controllers/StationMasterController.php:110
+* @see app/Http/Controllers/StationMasterController.php:172
 * @route '/station-master/{train}/apply-schedule'
 */
 applySchedule.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -843,7 +1000,7 @@ applySchedule.url = (args: { train: number | { id: number } } | [train: number |
 
 /**
 * @see \App\Http\Controllers\StationMasterController::applySchedule
-* @see app/Http/Controllers/StationMasterController.php:110
+* @see app/Http/Controllers/StationMasterController.php:172
 * @route '/station-master/{train}/apply-schedule'
 */
 applySchedule.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -853,7 +1010,7 @@ applySchedule.post = (args: { train: number | { id: number } } | [train: number 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::applySchedule
-* @see app/Http/Controllers/StationMasterController.php:110
+* @see app/Http/Controllers/StationMasterController.php:172
 * @route '/station-master/{train}/apply-schedule'
 */
 const applyScheduleForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -863,7 +1020,7 @@ const applyScheduleForm = (args: { train: number | { id: number } } | [train: nu
 
 /**
 * @see \App\Http\Controllers\StationMasterController::applySchedule
-* @see app/Http/Controllers/StationMasterController.php:110
+* @see app/Http/Controllers/StationMasterController.php:172
 * @route '/station-master/{train}/apply-schedule'
 */
 applyScheduleForm.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -875,7 +1032,7 @@ applySchedule.form = applyScheduleForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateFingerprint
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 export const updateFingerprint = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -890,7 +1047,7 @@ updateFingerprint.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateFingerprint
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 updateFingerprint.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -923,7 +1080,7 @@ updateFingerprint.url = (args: { train: number | { id: number } } | [train: numb
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateFingerprint
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 updateFingerprint.put = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -933,7 +1090,7 @@ updateFingerprint.put = (args: { train: number | { id: number } } | [train: numb
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateFingerprint
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 const updateFingerprintForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -948,7 +1105,7 @@ const updateFingerprintForm = (args: { train: number | { id: number } } | [train
 
 /**
 * @see \App\Http\Controllers\StationMasterController::updateFingerprint
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 updateFingerprintForm.put = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -963,6 +1120,6 @@ updateFingerprintForm.put = (args: { train: number | { id: number } } | [train: 
 
 updateFingerprint.form = updateFingerprintForm
 
-const StationMasterController = { show, updateTrain, storeMilestone, updateMilestone, storeTask, updateTask, getMarkdownFile, updateMarkdownFile, suggestSchedule, applySchedule, updateFingerprint }
+const StationMasterController = { show, updateTrain, syncMissionControl, storeMilestone, updateMilestone, storeTask, updateTask, dispatchTaskBot, getMarkdownFile, updateMarkdownFile, suggestSchedule, applySchedule, updateFingerprint }
 
 export default StationMasterController

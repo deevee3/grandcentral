@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 export const show = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 show.url = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions) => {
@@ -44,7 +44,7 @@ show.url = (args: { train: number | { id: number }, filename: string | number } 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 show.get = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -54,7 +54,7 @@ show.get = (args: { train: number | { id: number }, filename: string | number } 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 show.head = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -64,7 +64,7 @@ show.head = (args: { train: number | { id: number }, filename: string | number }
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 const showForm = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -74,7 +74,7 @@ const showForm = (args: { train: number | { id: number }, filename: string | num
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 showForm.get = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -84,7 +84,7 @@ showForm.get = (args: { train: number | { id: number }, filename: string | numbe
 
 /**
 * @see \App\Http\Controllers\StationMasterController::show
-* @see app/Http/Controllers/StationMasterController.php:45
+* @see app/Http/Controllers/StationMasterController.php:115
 * @route '/station-master/{train}/markdown/{filename}'
 */
 showForm.head = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -101,7 +101,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 export const update = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -116,7 +116,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 update.url = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions) => {
@@ -144,7 +144,7 @@ update.url = (args: { train: number | { id: number }, filename: string | number 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 update.put = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -154,7 +154,7 @@ update.put = (args: { train: number | { id: number }, filename: string | number 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 const updateForm = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -169,7 +169,7 @@ const updateForm = (args: { train: number | { id: number }, filename: string | n
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:63
+* @see app/Http/Controllers/StationMasterController.php:133
 * @route '/station-master/{train}/markdown/{filename}'
 */
 updateForm.put = (args: { train: number | { id: number }, filename: string | number } | [train: number | { id: number }, filename: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

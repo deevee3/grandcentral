@@ -29,5 +29,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('settings/ai', [AiSettingsController::class, 'edit'])->name('ai.edit');
     Route::patch('settings/ai', [AiSettingsController::class, 'update'])->name('ai.update');
+    Route::patch('settings/ai/mission-control', [AiSettingsController::class, 'updateMissionControl'])->name('ai.mission-control.update');
+    Route::patch('settings/ai/bot-hq', [AiSettingsController::class, 'updateBotHq'])->name('ai.bot-hq.update');
     Route::delete('settings/ai', [AiSettingsController::class, 'destroy'])->name('ai.destroy');
 });

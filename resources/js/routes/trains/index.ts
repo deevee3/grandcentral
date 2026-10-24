@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\TrainAboardController::__invoke
-* @see app/Http/Controllers/TrainAboardController.php:10
+* @see app/Http/Controllers/TrainAboardController.php:12
 * @route '/trains/{train}/aboard'
 */
 export const aboard = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ aboard.definition = {
 
 /**
 * @see \App\Http\Controllers\TrainAboardController::__invoke
-* @see app/Http/Controllers/TrainAboardController.php:10
+* @see app/Http/Controllers/TrainAboardController.php:12
 * @route '/trains/{train}/aboard'
 */
 aboard.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ aboard.url = (args: { train: number | { id: number } } | [train: number | { id: 
 
 /**
 * @see \App\Http\Controllers\TrainAboardController::__invoke
-* @see app/Http/Controllers/TrainAboardController.php:10
+* @see app/Http/Controllers/TrainAboardController.php:12
 * @route '/trains/{train}/aboard'
 */
 aboard.get = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ aboard.get = (args: { train: number | { id: number } } | [train: number | { id: 
 
 /**
 * @see \App\Http\Controllers\TrainAboardController::__invoke
-* @see app/Http/Controllers/TrainAboardController.php:10
+* @see app/Http/Controllers/TrainAboardController.php:12
 * @route '/trains/{train}/aboard'
 */
 aboard.head = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -69,7 +69,7 @@ aboard.head = (args: { train: number | { id: number } } | [train: number | { id:
 
 /**
 * @see \App\Http\Controllers\TrainAboardController::__invoke
-* @see app/Http/Controllers/TrainAboardController.php:10
+* @see app/Http/Controllers/TrainAboardController.php:12
 * @route '/trains/{train}/aboard'
 */
 const aboardForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ const aboardForm = (args: { train: number | { id: number } } | [train: number | 
 
 /**
 * @see \App\Http\Controllers\TrainAboardController::__invoke
-* @see app/Http/Controllers/TrainAboardController.php:10
+* @see app/Http/Controllers/TrainAboardController.php:12
 * @route '/trains/{train}/aboard'
 */
 aboardForm.get = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -89,7 +89,7 @@ aboardForm.get = (args: { train: number | { id: number } } | [train: number | { 
 
 /**
 * @see \App\Http\Controllers\TrainAboardController::__invoke
-* @see app/Http/Controllers/TrainAboardController.php:10
+* @see app/Http/Controllers/TrainAboardController.php:12
 * @route '/trains/{train}/aboard'
 */
 aboardForm.head = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

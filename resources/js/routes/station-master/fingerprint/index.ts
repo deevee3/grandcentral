@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 export const update = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 update.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ update.url = (args: { train: number | { id: number } } | [train: number | { id: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 update.put = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -59,7 +59,7 @@ update.put = (args: { train: number | { id: number } } | [train: number | { id: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 const updateForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -74,7 +74,7 @@ const updateForm = (args: { train: number | { id: number } } | [train: number | 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:288
+* @see app/Http/Controllers/StationMasterController.php:379
 * @route '/station-master/{train}/fingerprint'
 */
 updateForm.put = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

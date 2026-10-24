@@ -18,17 +18,28 @@ import {
 } from '@/components/ui/select';
 import stationMaster from '@/routes/station-master';
 import { useForm } from '@inertiajs/react';
+import { Bot } from 'lucide-react';
 import { useEffect } from 'react';
-import { Task, Train } from './types';
+import { BotCrewMember, Task, Train } from './types';
+
+const DEFAULT_CREW = [
+    'Janine',
+    'OpenClaw',
+    'Community Manager',
+    'Prism',
+    'Trading Bot',
+];
 
 export function EditTaskDialog({
     trainId,
     task,
+    botRoster = [],
     open,
     onOpenChange,
 }: {
     trainId: Train['id'];
     task: Task | null;
+    botRoster?: BotCrewMember[];
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }) {
@@ -39,6 +50,7 @@ export function EditTaskDialog({
         assigned_crew: '',
         status: 'pending',
         milestone_id: null as number | null,
+        completion_steps: '',
     });
 
     useEffect(() => {
@@ -50,6 +62,7 @@ export function EditTaskDialog({
                 assigned_crew: task.assigned_crew || '',
                 status: task.status,
                 milestone_id: task.milestone_id,
+                completion_steps: task.completion_steps || '',
             });
         }
     }, [open, task]);
@@ -68,13 +81,17 @@ export function EditTaskDialog({
 
     if (!task) return null;
 
+    const crewNames =
+        botRoster.length > 0 ? botRoster.map((b) => b.name) : DEFAULT_CREW;
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent>
+            <DialogContent className="max-h-[85vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Edit Manifest Item</DialogTitle>
                     <DialogDescription>
-                        Update the details of this task.
+                        Update task details, Mission Control completion steps,
+                        or Bot HQ crew assignment.
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={submit} className="space-y-4">
@@ -100,7 +117,7 @@ export function EditTaskDialog({
                         </Label>
                         <textarea
                             id="edit-task-description"
-                            className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                            className="flex min-h-[72px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                             value={data.description}
                             onChange={(e) =>
                                 setData('description', e.target.value)
@@ -173,7 +190,7 @@ export function EditTaskDialog({
 
                         <div className="col-span-2 space-y-2">
                             <Label htmlFor="edit-assigned_crew">
-                                Assigned Crew
+                                Assigned Crew / Bot
                             </Label>
                             <Input
                                 id="edit-assigned_crew"
@@ -181,13 +198,47 @@ export function EditTaskDialog({
                                 onChange={(e) =>
                                     setData('assigned_crew', e.target.value)
                                 }
-                                placeholder="e.g., Frontend Team"
+                                placeholder="e.g., Janine or OpenClaw"
                             />
+                            <div className="flex flex-wrap gap-1.5 pt-1">
+                                {crewNames.map((name) => (
+                                    <button
+                                        key={name}
+                                        type="button"
+                                        onClick={() =>
+                                            setData('assigned_crew', name)
+                                        }
+                                        className={`rounded-md border px-2.5 py-1 font-mono text-xs transition-colors ${
+                                            data.assigned_crew === name
+                                                ? 'border-primary bg-primary/15 font-semibold text-primary'
+                                                : 'border-border bg-secondary/60 text-secondary-foreground hover:bg-secondary'
+                                        }`}
+                                    >
+                                        <Bot className="mr-1 inline h-3 w-3" />
+                                        {name}
+                                    </button>
+                                ))}
+                            </div>
                             {errors.assigned_crew && (
                                 <p className="text-sm text-destructive">
                                     {errors.assigned_crew}
                                 </p>
                             )}
+                        </div>
+
+                        <div className="col-span-2 space-y-2">
+                            <Label htmlFor="edit-completion_steps">
+                                Bot / Janine Completion Guide
+                            </Label>
+                            <textarea
+                                id="edit-completion_steps"
+                                className="flex min-h-[90px] w-full rounded-md border border-input bg-transparent px-3 py-2 font-mono text-xs shadow-xs placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none"
+                                value={data.completion_steps}
+                                onChange={(e) =>
+                                    setData('completion_steps', e.target.value)
+                                }
+                                placeholder="Step title — what to do..."
+                            />
                         </div>
                     </div>
 

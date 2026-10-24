@@ -26,6 +26,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('station-master/{train}', [StationMasterController::class, 'updateTrain'])
         ->name('station-master.update');
 
+    Route::post('station-master/{train}/sync-mc', [StationMasterController::class, 'syncMissionControl'])
+        ->name('station-master.sync-mc');
+
     Route::post('station-master/{train}/milestones', [StationMasterController::class, 'storeMilestone'])
         ->name('station-master.milestones.store');
 
@@ -37,6 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::put('station-master/{train}/tasks/{task}', [StationMasterController::class, 'updateTask'])
         ->name('station-master.tasks.update');
+
+    Route::post('station-master/{train}/tasks/{task}/dispatch-bot', [StationMasterController::class, 'dispatchTaskBot'])
+        ->name('station-master.tasks.dispatch-bot');
 
     Route::get('station-master/{train}/markdown/{filename}', [StationMasterController::class, 'getMarkdownFile'])
         ->name('station-master.markdown.show');
@@ -55,6 +61,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('central-tower', [CentralTowerController::class, 'index'])
         ->name('central-tower.index');
+
+    Route::post('central-tower/sync-mc', [CentralTowerController::class, 'syncMissionControl'])
+        ->name('central-tower.sync-mc');
+
+    Route::post('central-tower/bot-heartbeat', [CentralTowerController::class, 'sendBotHeartbeat'])
+        ->name('central-tower.bot-heartbeat');
 });
 
 require __DIR__.'/settings.php';

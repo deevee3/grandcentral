@@ -1,20 +1,30 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import stationMaster from '@/routes/station-master';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import {
+    Bot,
     Calendar,
     CheckCircle2,
     Clock,
     ExternalLink,
+    Loader2,
     MapPin,
     MoreVertical,
     Pencil,
     Plus,
+    RefreshCw,
     Sparkles,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -28,10 +38,13 @@ import { Milestone, Props, Task } from './partials/types';
 
 export default function StationMaster({
     train,
-    milestones,
-    looseTasks,
-    markdownFiles,
-    fingerprint,
+    milestones = [],
+    looseTasks = [],
+    markdownFiles = [],
+    fingerprint = null,
+    mcProjects = [],
+    suggestedMcProjectId = null,
+    botRoster = [],
 }: Props) {
     // Create Dialog States
     const [createTaskOpen, setCreateTaskOpen] = useState(false);
@@ -50,6 +63,15 @@ export default function StationMaster({
     const [editTaskOpen, setEditTaskOpen] = useState(false);
     const [editingTask, setEditingTask] = useState<Task | null>(null);
 
+    // Mission Control Sync & Bot Dispatch States
+    const [selectedMcProjectId, setSelectedMcProjectId] = useState<string>(
+        String(train.mc_project_id || suggestedMcProjectId || 'auto'),
+    );
+    const [isSyncingMc, setIsSyncingMc] = useState(false);
+    const [dispatchingTaskId, setDispatchingTaskId] = useState<number | null>(
+        null,
+    );
+
     const openCreateTask = (
         e: React.MouseEvent,
         milestoneId: number | null,
@@ -63,8 +85,6 @@ export default function StationMaster({
 
     const openEditMilestone = (e: React.MouseEvent, milestone: Milestone) => {
         e.preventDefault();
-        // Don't stop propagation if we want the card to be interactive,
-        // but here we specifically want to edit when clicking the header.
         setEditingMilestone(milestone);
         setEditMilestoneOpen(true);
     };
@@ -76,11 +96,47 @@ export default function StationMaster({
         setEditTaskOpen(true);
     };
 
+    const handleSyncMissionControl = () => {
+        setIsSyncingMc(true);
+        const mcProjectId =
+            selectedMcProjectId !== 'auto' && selectedMcProjectId !== 'create'
+                ? Number(selectedMcProjectId)
+                : null;
+
+        router.post(
+            `/station-master/${train.id}/sync-mc`,
+            {
+                mc_project_id: mcProjectId,
+                create_if_missing: selectedMcProjectId === 'create',
+            },
+            {
+                preserveScroll: true,
+                onFinish: () => setIsSyncingMc(false),
+            },
+        );
+    };
+
+    const handleDispatchBot = (e: React.MouseEvent, task: Task) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setDispatchingTaskId(task.id);
+
+        router.post(
+            `/station-master/${train.id}/tasks/${task.id}/dispatch-bot`,
+            {
+                assigned_crew: task.assigned_crew || 'Janine',
+            },
+            {
+                preserveScroll: true,
+                onFinish: () => setDispatchingTaskId(null),
+            },
+        );
+    };
+
     const openInWindsurf = (e: React.MouseEvent, milestone: Milestone) => {
         e.preventDefault();
         e.stopPropagation();
 
-        // Build the prompt for Cascade
         const taskList = milestone.tasks
             .filter((t) => t.status !== 'completed')
             .map(
@@ -91,9 +147,7 @@ export default function StationMaster({
 
         const prompt = `I'm working on the milestone "${milestone.title}" for the ${train.name} project.${milestone.description ? `\n\nMilestone description: ${milestone.description}` : ''}\n\nRemaining tasks:\n${taskList || 'No tasks defined yet.'}\n\nPlease help me work on this milestone.`;
 
-        // Copy prompt to clipboard
         navigator.clipboard.writeText(prompt).then(() => {
-            // Open project in Windsurf
             const encodedPath = train.path
                 .split('/')
                 .filter(Boolean)
@@ -122,7 +176,7 @@ export default function StationMaster({
                 {/* Header Section */}
                 <div className="flex flex-col justify-between gap-4 border-b border-border pb-6 md:flex-row md:items-center">
                     <div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                             <h1 className="font-serif text-3xl font-bold tracking-tight text-foreground">
                                 {train.name}
                             </h1>
@@ -135,6 +189,15 @@ export default function StationMaster({
                             >
                                 <Pencil className="h-4 w-4" />
                             </Button>
+                            {train.mc_project_id && (
+                                <Badge
+                                    variant="outline"
+                                    className="border-emerald-600/30 bg-emerald-500/10 font-mono text-xs text-emerald-800 dark:border-emerald-400/30 dark:bg-emerald-500/15 dark:text-emerald-300"
+                                >
+                                    MC #{train.mc_project_id}:{' '}
+                                    {train.mc_project_title || train.name}
+                                </Badge>
+                            )}
                         </div>
                         <div className="mt-1.5 flex items-center gap-2 font-mono text-sm text-muted-foreground">
                             <MapPin className="h-4 w-4 text-primary" />
@@ -162,6 +225,68 @@ export default function StationMaster({
                             AI Suggestions
                         </Button>
                         <CreateMilestoneDialog trainId={train.id} />
+                    </div>
+                </div>
+
+                {/* Mission Control & Bot Fleet Dispatch Bar */}
+                <div className="flex flex-col justify-between gap-4 rounded-lg border border-border bg-card p-4 shadow-xs lg:flex-row lg:items-center">
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2 font-mono text-xs font-semibold tracking-wider text-primary uppercase">
+                            <RefreshCw className="h-3.5 w-3.5" />
+                            Mission Control HQ & Bot Fleet Bridge
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                            {train.mc_project_id
+                                ? `Linked to Mission Control project "${train.mc_project_title}". Milestones, tasks, and bot guides sync automatically.`
+                                : 'Link this app repository to a Mission Control project to sync milestones, tasks, and Janine / OpenClaw bot dispatches.'}
+                        </p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2.5">
+                        {mcProjects.length > 0 && (
+                            <div className="w-64">
+                                <Select
+                                    value={selectedMcProjectId}
+                                    onValueChange={setSelectedMcProjectId}
+                                >
+                                    <SelectTrigger aria-label="Mission Control project">
+                                        <SelectValue placeholder="Match Mission Control Project..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="auto">
+                                            Auto-match by project name
+                                        </SelectItem>
+                                        <SelectItem value="create">
+                                            + Create new in Mission Control
+                                        </SelectItem>
+                                        {mcProjects.map((proj) => (
+                                            <SelectItem
+                                                key={proj.id}
+                                                value={String(proj.id)}
+                                            >
+                                                #{proj.id} — {proj.title}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        )}
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleSyncMissionControl}
+                            disabled={isSyncingMc}
+                            className="gap-1.5"
+                        >
+                            {isSyncingMc ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            ) : (
+                                <RefreshCw className="h-3.5 w-3.5" />
+                            )}
+                            {train.mc_project_id
+                                ? 'Sync Mission Control'
+                                : 'Link & Sync MC'}
+                        </Button>
                     </div>
                 </div>
 
@@ -222,6 +347,14 @@ export default function StationMaster({
                                                                     set
                                                                 </span>
                                                             )}
+                                                            {milestone.mc_milestone_id && (
+                                                                <span className="text-primary">
+                                                                    • MC #
+                                                                    {
+                                                                        milestone.mc_milestone_id
+                                                                    }
+                                                                </span>
+                                                            )}
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-2">
@@ -271,7 +404,7 @@ export default function StationMaster({
                                                                         key={
                                                                             task.id
                                                                         }
-                                                                        className="flex cursor-pointer items-center gap-3 py-2.5 transition-colors hover:bg-muted/40"
+                                                                        className="cursor-pointer py-2.5 transition-colors hover:bg-muted/40"
                                                                         onClick={(
                                                                             e,
                                                                         ) =>
@@ -281,34 +414,71 @@ export default function StationMaster({
                                                                             )
                                                                         }
                                                                     >
-                                                                        <CheckCircle2
-                                                                            className={`h-4 w-4 shrink-0 ${
-                                                                                task.status ===
-                                                                                'completed'
-                                                                                    ? 'text-emerald-700 dark:text-emerald-400'
-                                                                                    : 'text-muted-foreground'
-                                                                            }`}
-                                                                        />
-                                                                        <span
-                                                                            className={`flex-1 text-sm ${
-                                                                                task.status ===
-                                                                                'completed'
-                                                                                    ? 'text-muted-foreground line-through'
-                                                                                    : 'text-foreground'
-                                                                            }`}
-                                                                        >
-                                                                            {
-                                                                                task.title
-                                                                            }
-                                                                        </span>
-                                                                        <Badge
-                                                                            variant="outline"
-                                                                            className="font-mono text-xs uppercase"
-                                                                        >
-                                                                            {
-                                                                                task.priority
-                                                                            }
-                                                                        </Badge>
+                                                                        <div className="flex items-center gap-3">
+                                                                            <CheckCircle2
+                                                                                className={`h-4 w-4 shrink-0 ${
+                                                                                    task.status ===
+                                                                                    'completed'
+                                                                                        ? 'text-emerald-700 dark:text-emerald-400'
+                                                                                        : 'text-muted-foreground'
+                                                                                }`}
+                                                                            />
+                                                                            <span
+                                                                                className={`flex-1 text-sm ${
+                                                                                    task.status ===
+                                                                                    'completed'
+                                                                                        ? 'text-muted-foreground line-through'
+                                                                                        : 'text-foreground'
+                                                                                }`}
+                                                                            >
+                                                                                {
+                                                                                    task.title
+                                                                                }
+                                                                            </span>
+                                                                            <Button
+                                                                                type="button"
+                                                                                variant="ghost"
+                                                                                size="sm"
+                                                                                className="h-7 gap-1 px-2 font-mono text-xs text-muted-foreground hover:text-primary"
+                                                                                onClick={(
+                                                                                    e,
+                                                                                ) =>
+                                                                                    handleDispatchBot(
+                                                                                        e,
+                                                                                        task,
+                                                                                    )
+                                                                                }
+                                                                                disabled={
+                                                                                    dispatchingTaskId ===
+                                                                                    task.id
+                                                                                }
+                                                                                title={`Dispatch ${task.assigned_crew || 'Janine'} to generate guide or execute`}
+                                                                            >
+                                                                                {dispatchingTaskId ===
+                                                                                task.id ? (
+                                                                                    <Loader2 className="h-3 w-3 animate-spin" />
+                                                                                ) : (
+                                                                                    <Bot className="h-3 w-3 text-primary" />
+                                                                                )}
+                                                                                {task.assigned_crew ||
+                                                                                    'Janine'}
+                                                                            </Button>
+                                                                            <Badge
+                                                                                variant="outline"
+                                                                                className="font-mono text-xs uppercase"
+                                                                            >
+                                                                                {
+                                                                                    task.priority
+                                                                                }
+                                                                            </Badge>
+                                                                        </div>
+                                                                        {task.completion_steps && (
+                                                                            <pre className="mt-2 ml-7 rounded bg-muted/70 p-2.5 font-mono text-xs whitespace-pre-wrap text-muted-foreground">
+                                                                                {
+                                                                                    task.completion_steps
+                                                                                }
+                                                                            </pre>
+                                                                        )}
                                                                     </li>
                                                                 ),
                                                             )}
@@ -389,19 +559,61 @@ export default function StationMaster({
                                                             <div className="text-sm font-medium text-foreground">
                                                                 {task.title}
                                                             </div>
-                                                            <div className="mt-0.5 text-xs text-muted-foreground">
-                                                                {task.assigned_crew ||
-                                                                    'Unassigned'}
+                                                            <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                                                                <span>
+                                                                    {task.assigned_crew ||
+                                                                        'Unassigned'}
+                                                                </span>
+                                                                {task.mc_task_id && (
+                                                                    <span className="font-mono text-primary">
+                                                                        • MC #
+                                                                        {
+                                                                            task.mc_task_id
+                                                                        }
+                                                                    </span>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <Badge
-                                                        variant="secondary"
-                                                        className="font-mono text-xs uppercase"
-                                                    >
-                                                        {task.priority}
-                                                    </Badge>
+                                                    <div className="flex items-center gap-1.5">
+                                                        <Button
+                                                            type="button"
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            className="h-7 gap-1 px-2 font-mono text-xs text-muted-foreground hover:text-primary"
+                                                            onClick={(e) =>
+                                                                handleDispatchBot(
+                                                                    e,
+                                                                    task,
+                                                                )
+                                                            }
+                                                            disabled={
+                                                                dispatchingTaskId ===
+                                                                task.id
+                                                            }
+                                                            title={`Dispatch to ${task.assigned_crew || 'Janine'}`}
+                                                        >
+                                                            {dispatchingTaskId ===
+                                                            task.id ? (
+                                                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                                            ) : (
+                                                                <Bot className="h-3.5 w-3.5 text-primary" />
+                                                            )}
+                                                            Dispatch
+                                                        </Button>
+                                                        <Badge
+                                                            variant="secondary"
+                                                            className="font-mono text-xs uppercase"
+                                                        >
+                                                            {task.priority}
+                                                        </Badge>
+                                                    </div>
                                                 </div>
+                                                {task.completion_steps && (
+                                                    <pre className="mt-2 ml-4 rounded bg-muted/70 p-2.5 font-mono text-xs whitespace-pre-wrap text-muted-foreground">
+                                                        {task.completion_steps}
+                                                    </pre>
+                                                )}
                                             </li>
                                         ))}
                                     </ul>
@@ -429,6 +641,7 @@ export default function StationMaster({
                     key={createTaskDialogKey}
                     trainId={train.id}
                     milestoneId={selectedMilestoneId}
+                    botRoster={botRoster}
                     open={createTaskOpen}
                     onOpenChange={setCreateTaskOpen}
                 />
@@ -443,6 +656,7 @@ export default function StationMaster({
                 <EditTaskDialog
                     trainId={train.id}
                     task={editingTask}
+                    botRoster={botRoster}
                     open={editTaskOpen}
                     onOpenChange={setEditTaskOpen}
                 />

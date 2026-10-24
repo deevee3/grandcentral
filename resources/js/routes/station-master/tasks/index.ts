@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 export const store = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 store.url = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { train: number | { id: number } } | [train: number | { id: n
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 store.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ store.post = (args: { train: number | { id: number } } | [train: number | { id: 
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 const storeForm = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ const storeForm = (args: { train: number | { id: number } } | [train: number | {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::store
-* @see app/Http/Controllers/StationMasterController.php:250
+* @see app/Http/Controllers/StationMasterController.php:321
 * @route '/station-master/{train}/tasks'
 */
 storeForm.post = (args: { train: number | { id: number } } | [train: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -81,7 +81,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 export const update = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -96,7 +96,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 update.url = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -126,7 +126,7 @@ update.url = (args: { train: number | { id: number }, task: number | { id: numbe
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 update.put = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -136,7 +136,7 @@ update.put = (args: { train: number | { id: number }, task: number | { id: numbe
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 const updateForm = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -151,7 +151,7 @@ const updateForm = (args: { train: number | { id: number }, task: number | { id:
 
 /**
 * @see \App\Http\Controllers\StationMasterController::update
-* @see app/Http/Controllers/StationMasterController.php:272
+* @see app/Http/Controllers/StationMasterController.php:357
 * @route '/station-master/{train}/tasks/{task}'
 */
 updateForm.put = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -166,9 +166,87 @@ updateForm.put = (args: { train: number | { id: number }, task: number | { id: n
 
 update.form = updateForm
 
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+export const dispatchBot = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: dispatchBot.url(args, options),
+    method: 'post',
+})
+
+dispatchBot.definition = {
+    methods: ["post"],
+    url: '/station-master/{train}/tasks/{task}/dispatch-bot',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+dispatchBot.url = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions) => {
+    if (Array.isArray(args)) {
+        args = {
+            train: args[0],
+            task: args[1],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        train: typeof args.train === 'object'
+        ? args.train.id
+        : args.train,
+        task: typeof args.task === 'object'
+        ? args.task.id
+        : args.task,
+    }
+
+    return dispatchBot.definition.url
+            .replace('{train}', parsedArgs.train.toString())
+            .replace('{task}', parsedArgs.task.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+dispatchBot.post = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: dispatchBot.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+const dispatchBotForm = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: dispatchBot.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\StationMasterController::dispatchBot
+* @see app/Http/Controllers/StationMasterController.php:94
+* @route '/station-master/{train}/tasks/{task}/dispatch-bot'
+*/
+dispatchBotForm.post = (args: { train: number | { id: number }, task: number | { id: number } } | [train: number | { id: number }, task: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: dispatchBot.url(args, options),
+    method: 'post',
+})
+
+dispatchBot.form = dispatchBotForm
+
 const tasks = {
     store: Object.assign(store, store),
     update: Object.assign(update, update),
+    dispatchBot: Object.assign(dispatchBot, dispatchBot),
 }
 
 export default tasks

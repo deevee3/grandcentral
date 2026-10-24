@@ -26,6 +26,8 @@ type Train = {
     statusLabel: string;
     platform: string | null;
     lastDeparture: string | null;
+    mcProjectId?: number | null;
+    mcProjectTitle?: string | null;
     aboardUrl: string;
     stationMasterUrl: string;
 };
@@ -171,6 +173,18 @@ export default function Dashboard({ trains }: { trains: Train[] }) {
                                                                     train.statusLabel
                                                                 }
                                                             </Badge>
+                                                            {train.mcProjectId && (
+                                                                <Badge
+                                                                    variant="secondary"
+                                                                    className="font-mono text-xs"
+                                                                    title={`Synced with Mission Control: ${train.mcProjectTitle}`}
+                                                                >
+                                                                    MC #
+                                                                    {
+                                                                        train.mcProjectId
+                                                                    }
+                                                                </Badge>
+                                                            )}
                                                         </div>
 
                                                         <div className="mt-1.5 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-xs text-muted-foreground">

@@ -1,7 +1,9 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import missionControl from './mission-control'
+import botHq from './bot-hq'
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::edit
-* @see app/Http/Controllers/Settings/AiSettingsController.php:13
+* @see app/Http/Controllers/Settings/AiSettingsController.php:16
 * @route '/settings/ai'
 */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +18,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::edit
-* @see app/Http/Controllers/Settings/AiSettingsController.php:13
+* @see app/Http/Controllers/Settings/AiSettingsController.php:16
 * @route '/settings/ai'
 */
 edit.url = (options?: RouteQueryOptions) => {
@@ -25,7 +27,7 @@ edit.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::edit
-* @see app/Http/Controllers/Settings/AiSettingsController.php:13
+* @see app/Http/Controllers/Settings/AiSettingsController.php:16
 * @route '/settings/ai'
 */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +37,7 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::edit
-* @see app/Http/Controllers/Settings/AiSettingsController.php:13
+* @see app/Http/Controllers/Settings/AiSettingsController.php:16
 * @route '/settings/ai'
 */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +47,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::edit
-* @see app/Http/Controllers/Settings/AiSettingsController.php:13
+* @see app/Http/Controllers/Settings/AiSettingsController.php:16
 * @route '/settings/ai'
 */
 const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +57,7 @@ const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::edit
-* @see app/Http/Controllers/Settings/AiSettingsController.php:13
+* @see app/Http/Controllers/Settings/AiSettingsController.php:16
 * @route '/settings/ai'
 */
 editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +67,7 @@ editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::edit
-* @see app/Http/Controllers/Settings/AiSettingsController.php:13
+* @see app/Http/Controllers/Settings/AiSettingsController.php:16
 * @route '/settings/ai'
 */
 editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +84,7 @@ edit.form = editForm
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::update
-* @see app/Http/Controllers/Settings/AiSettingsController.php:20
+* @see app/Http/Controllers/Settings/AiSettingsController.php:29
 * @route '/settings/ai'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -97,7 +99,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::update
-* @see app/Http/Controllers/Settings/AiSettingsController.php:20
+* @see app/Http/Controllers/Settings/AiSettingsController.php:29
 * @route '/settings/ai'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -106,7 +108,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::update
-* @see app/Http/Controllers/Settings/AiSettingsController.php:20
+* @see app/Http/Controllers/Settings/AiSettingsController.php:29
 * @route '/settings/ai'
 */
 update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -116,7 +118,7 @@ update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::update
-* @see app/Http/Controllers/Settings/AiSettingsController.php:20
+* @see app/Http/Controllers/Settings/AiSettingsController.php:29
 * @route '/settings/ai'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -131,7 +133,7 @@ const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::update
-* @see app/Http/Controllers/Settings/AiSettingsController.php:20
+* @see app/Http/Controllers/Settings/AiSettingsController.php:29
 * @route '/settings/ai'
 */
 updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -148,7 +150,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::destroy
-* @see app/Http/Controllers/Settings/AiSettingsController.php:31
+* @see app/Http/Controllers/Settings/AiSettingsController.php:78
 * @route '/settings/ai'
 */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -163,7 +165,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::destroy
-* @see app/Http/Controllers/Settings/AiSettingsController.php:31
+* @see app/Http/Controllers/Settings/AiSettingsController.php:78
 * @route '/settings/ai'
 */
 destroy.url = (options?: RouteQueryOptions) => {
@@ -172,7 +174,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::destroy
-* @see app/Http/Controllers/Settings/AiSettingsController.php:31
+* @see app/Http/Controllers/Settings/AiSettingsController.php:78
 * @route '/settings/ai'
 */
 destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -182,7 +184,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::destroy
-* @see app/Http/Controllers/Settings/AiSettingsController.php:31
+* @see app/Http/Controllers/Settings/AiSettingsController.php:78
 * @route '/settings/ai'
 */
 const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -197,7 +199,7 @@ const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =
 
 /**
 * @see \App\Http\Controllers\Settings\AiSettingsController::destroy
-* @see app/Http/Controllers/Settings/AiSettingsController.php:31
+* @see app/Http/Controllers/Settings/AiSettingsController.php:78
 * @route '/settings/ai'
 */
 destroyForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -215,6 +217,8 @@ destroy.form = destroyForm
 const ai = {
     edit: Object.assign(edit, edit),
     update: Object.assign(update, update),
+    missionControl: Object.assign(missionControl, missionControl),
+    botHq: Object.assign(botHq, botHq),
     destroy: Object.assign(destroy, destroy),
 }
 

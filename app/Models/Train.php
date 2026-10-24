@@ -14,10 +14,14 @@ class Train extends Model
         'last_departure',
         'platform',
         'cargo',
+        'mc_project_id',
+        'mc_project_title',
+        'mc_synced_at',
     ];
 
     protected $casts = [
         'last_departure' => 'datetime',
+        'mc_synced_at' => 'datetime',
         'cargo' => AsArrayObject::class,
     ];
 

@@ -12,6 +12,7 @@ class Milestone extends Model
         'description',
         'due_date',
         'status',
+        'mc_milestone_id',
     ];
 
     protected $casts = [
