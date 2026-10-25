@@ -32,4 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('settings/ai/mission-control', [AiSettingsController::class, 'updateMissionControl'])->name('ai.mission-control.update');
     Route::patch('settings/ai/bot-hq', [AiSettingsController::class, 'updateBotHq'])->name('ai.bot-hq.update');
     Route::delete('settings/ai', [AiSettingsController::class, 'destroy'])->name('ai.destroy');
+
+    Route::get('settings/yard', [\App\Http\Controllers\Settings\YardSettingsController::class, 'edit'])->name('yard.edit');
+    Route::patch('settings/yard', [\App\Http\Controllers\Settings\YardSettingsController::class, 'update'])->name('yard.update');
+    Route::post('settings/yard/rescan', [\App\Http\Controllers\Settings\YardSettingsController::class, 'rescan'])->name('yard.rescan');
 });

@@ -65,6 +65,47 @@ class AiSetting extends Model
         return static::getOpenAiKey() !== null;
     }
 
+    public static function getYardPath(): string
+    {
+        $stored = static::get('yard_path');
+        if (is_string($stored) && $stored !== '') {
+            return rtrim($stored, '/');
+        }
+
+        $configPath = config('grandcentral.yard_path');
+        if (is_string($configPath) && is_dir($configPath)) {
+            return rtrim($configPath, '/');
+        }
+
+        $home = $_SERVER['HOME'] ?? getenv('HOME') ?: '/home/housedv';
+        $projectsPath = rtrim((string) $home, '/').'/projects';
+        if (is_dir($projectsPath)) {
+            return $projectsPath;
+        }
+
+        return rtrim((string) ($configPath ?: base_path()), '/');
+    }
+
+    public static function setYardPath(string $path): void
+    {
+        static::set('yard_path', rtrim(trim($path), '/'), false);
+    }
+
+    public static function getScanMaxDepth(): int
+    {
+        $stored = static::get('yard_scan_max_depth');
+        if ($stored !== null && is_numeric($stored)) {
+            return max(1, min(5, (int) $stored));
+        }
+
+        return (int) config('grandcentral.max_depth', 2);
+    }
+
+    public static function setScanMaxDepth(int $depth): void
+    {
+        static::set('yard_scan_max_depth', (string) max(1, min(5, $depth)), false);
+    }
+
     public static function getMissionControlUrl(): string
     {
         return rtrim((string) (static::get('mc_api_url') ?: config('grandcentral.mission_control.url', 'https://mission-control-hq-api.mwszghdkkf.workers.dev')), '/');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AiSetting;
 use App\Models\Train;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -10,6 +11,10 @@ class DashboardController extends Controller
 {
     public function show(): Response
     {
+        $yardPath = AiSetting::getYardPath();
+        $scanMaxDepth = AiSetting::getScanMaxDepth();
+        $yardExists = is_dir($yardPath);
+
         $trains = Train::query()
             ->orderByRaw("coalesce(platform, '') asc")
             ->orderBy('name')
@@ -30,6 +35,11 @@ class DashboardController extends Controller
 
         return Inertia::render('dashboard', [
             'trains' => $trains,
+            'yardPath' => $yardPath,
+            'scanMaxDepth' => $scanMaxDepth,
+            'yardExists' => $yardExists,
+            'status' => session('status'),
+            'stats' => session('stats'),
         ]);
     }
 }

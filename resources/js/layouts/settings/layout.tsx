@@ -36,6 +36,11 @@ const sidebarNavItems: NavItem[] = [
         href: '/settings/ai',
         icon: null,
     },
+    {
+        title: 'Yard Sourcing',
+        href: '/settings/yard',
+        icon: null,
+    },
 ];
 
 export default function SettingsLayout({ children }: PropsWithChildren) {

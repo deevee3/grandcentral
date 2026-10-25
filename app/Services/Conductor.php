@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AiSetting;
 use App\Models\Train;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Carbon;
@@ -21,8 +22,8 @@ class Conductor
 
     public function inspect(?string $yardPath = null, ?int $maxDepth = null, bool $dryRun = false): array
     {
-        $yardPath = $yardPath ?? config('grandcentral.yard_path');
-        $maxDepth = $maxDepth ?? (int) config('grandcentral.max_depth', 2);
+        $yardPath = $yardPath ?? AiSetting::getYardPath();
+        $maxDepth = $maxDepth ?? AiSetting::getScanMaxDepth();
         $yardPath = rtrim($yardPath, '/');
 
         if (! $this->files->isDirectory($yardPath)) {
